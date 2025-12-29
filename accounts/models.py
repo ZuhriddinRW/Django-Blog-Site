@@ -41,6 +41,8 @@ class User ( AbstractUser, PermissionsMixin ) :
     email = models.EmailField ( blank=True, null=True )
     age = models.PositiveIntegerField ( null=True, blank=True )
     phone_number = models.CharField ( unique=True, max_length=15, blank=True, null=True )
+    address = models.CharField ( max_length=150, blank=True, null=True )
+    birth_date = models.DateTimeField ( blank=True, null=True )
 
     objects = UserManager ()
 
