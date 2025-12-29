@@ -8,10 +8,13 @@ class CustomUserCreationForm ( UserCreationForm ) :
     first_name = forms.CharField ( max_length=25, required=False )
     last_name = forms.CharField ( max_length=25, required=False )
     phone_number = forms.CharField ( max_length=15, required=False )
+    address = forms.CharField ( max_length=150, required=False )
+    birth_date = forms.DateTimeField ( required=False )
 
     class Meta :
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'phone_number', 'password1', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone_number', 'address', 'birth_date', 'password1',
+                  'password2']
 
     def clean_email(self) :
         email = self.cleaned_data.get ( 'email' )
@@ -41,4 +44,5 @@ class CustomUserCreationForm ( UserCreationForm ) :
 class CustomUserChangeForm ( UserChangeForm ) :
     class Meta :
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'phone_number', 'is_active', 'is_staff']
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone_number', 'address', 'birth_date', 'is_active',
+                  'is_staff']
