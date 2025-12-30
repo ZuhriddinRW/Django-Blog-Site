@@ -33,7 +33,7 @@ ROOT_URLCONF = 'blog_project.urls'
 TEMPLATES = [
     {
         'BACKEND' : 'django.template.backends.django.DjangoTemplates',
-        'DIRS' : [str ( BASE_DIR.joinpath ( 'templates' ) )],
+        'DIRS' : [ ( BASE_DIR / 'templates' )],
         'APP_DIRS' : True,
         'OPTIONS' : {
             'context_processors' : [
@@ -78,4 +78,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+
+LOGIN_URL = 'signin'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'signin'
+
 AUTH_USER_MODEL = 'accounts.User'
