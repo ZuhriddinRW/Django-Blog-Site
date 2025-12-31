@@ -10,12 +10,111 @@
             font-family: 'Inter', system-ui, sans-serif;
             background-color: oklch(21% 0.034 264.665);
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 22px;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            letter-spacing: 0.2px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .chev {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid rgba(255, 255, 255, 0.7);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+            transform: rotate(45deg);
+            margin-top: -2px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            margin-top: 10px;
+            min-width: 210px;
+            padding: 10px;
+            border-radius: 14px;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 10px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.10);
+            margin: 8px 0;
+        }
+
+        /* --- Page layout --- */
+        .page {
+            padding: 26px 20px;
+            display: flex;
+            justify-content: center;
         }
         .container {
             text-align: center;
@@ -52,7 +151,29 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <nav class="navbar">
+        <a class="brand" href="{% url 'home' %}">Blog</a>
+
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <div class="dropdown" id="profileDropdown">
+                    <div class="dropdown-toggle" id="dropdownToggle" aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }} <span class="chev"></span>
+                    </div>
+                    <div class="dropdown-menu" id="dropdownMenu" role="menu">
+                        <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+                        <div class="divider"></div>
+                        <a class="dropdown-item" href="{% url 'signout' %}">Logout</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'signin' %}" class="btn">Sign In</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="page">
+        <div class="container">
         <h1>Welcome to Your Dashboard! 🎉</h1>
 
         <div class="user-info">
@@ -62,7 +183,40 @@
 
         <p>You have successfully logged in.</p>
 
-        <a href="{% url 'signout' %}" class="btn">Sign Out</a>
+            <a href="{% url 'signout' %}" class="btn">Sign Out</a>
+        </div>
     </div>
+
+    <script>
+        (function () {
+            const toggle = document.getElementById('dropdownToggle');
+            const menu = document.getElementById('dropdownMenu');
+            if (!toggle || !menu) return;
+
+            function closeMenu() {
+                menu.classList.remove('show');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+
+            toggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = menu.classList.contains('show');
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    menu.classList.add('show');
+                    toggle.setAttribute('aria-expanded', 'true');
+                }
+            });
+
+            document.addEventListener('click', function () {
+                closeMenu();
+            });
+
+            menu.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        })();
+    </script>
 </body>
 </html>
