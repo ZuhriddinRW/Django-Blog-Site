@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-[oklch(21%_0.034_264.665)] text-white min-h-screen">
+
+<nav class="sticky top-0 z-10 flex items-center justify-between px-6 py-3.5 bg-black/25 backdrop-blur-[10px] border-b border-white/[0.08]">
+    <a href="{% url 'home' %}"
+       class="flex items-center gap-2.5 font-bold text-xl tracking-[0.2px] text-white no-underline">
+        ✍️ Blog
+    </a>
+</nav>
+
+<article class="py-10 px-5 max-w-[900px] mx-auto">
+    <header class="mb-12">
+        <h1 class="text-6xl font-bold mb-6 leading-tight">
+            {{ article.title }}
+        </h1>
+
+        {% if article.summary %}
+        <p class="text-2xl text-[oklch(70%_.022_261.325)] mb-8 italic">
+            {{ article.summary }}
+        </p>
+        {% endif %}
+
+        <div class="flex items-center gap-5 py-6 border-y border-white/10">
+                <span class="text-[oklch(75%_.10_277)] font-semibold">
+                    by {{ article.author.username }}
+                </span>
+        </div>
+    </header>
+
+    {% if article.photo %}
+    <div class="mb-12 rounded-2xl overflow-hidden">
+        <img src="{{ article.photo.url }}" alt="{{ article.title }}" class="w-full h-auto">
+    </div>
+    {% endif %}
+
+    <div class="mb-16">
+        <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-10 text-lg leading-relaxed text-[oklch(70%_.022_261.325)] whitespace-pre-wrap">
+            {{ article.body }}
+        </div>
+    </div>
+
+    <div class="flex flex-wrap gap-3 pt-12 border-t border-white/10">
+        {% if user == article.author %}
+        <a href="{% url 'article_edit' article.pk %}"
+           class="px-6 py-3 bg-[oklch(58.5%_.233_277.117)] text-white rounded-xl font-semibold hover:bg-[oklch(67.3%_.182_276.935)] hover:-translate-y-px transition-all duration-200 no-underline">
+            ✏️ Edit Article
+        </a>
+        <a href="{% url 'article_delete' article.pk %}"
+           class="px-6 py-3 bg-red-500/20 border border-red-500/30 text-red-300 rounded-xl font-semibold hover:bg-red-500/30 transition-all duration-200 no-underline">
+            🗑️ Delete
+        </a>
+        {% endif %}
+        <a href="{% url 'home' %}"
+           class="px-6 py-3 bg-white/[0.06] border border-white/10 text-white rounded-xl font-semibold hover:bg-white/[0.08] transition-all duration-200 no-underline">
+            ← Back to Home
+        </a>
+    </div>
+</article>
+
+</body>
+</html>

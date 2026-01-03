@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Article</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-[oklch(21%_0.034_264.665)] text-white min-h-screen flex items-center justify-center p-6">
+
+<div class="max-w-lg w-full bg-white/[0.04] border border-white/[0.08] rounded-2xl p-10 text-center">
+    <div class="text-8xl mb-8">⚠️</div>
+
+    <h1 class="text-4xl font-bold mb-4">Delete Article?</h1>
+
+    <p class="text-xl text-[oklch(70%_.022_261.325)] mb-3 italic">
+        "{{ article.title }}"
+    </p>
+
+    <p class="text-red-400 font-semibold mb-8">
+        This action cannot be undone!
+    </p>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <button type="submit"
+                class="w-full px-6 py-4 bg-red-500/30 border border-red-500/50 text-white rounded-xl font-bold text-lg hover:bg-red-500/50 transition-all duration-200">
+            Yes, Delete Forever
+        </button>
+        <a href="{% url 'article_detail' article.pk %}"
+           class="block w-full px-6 py-4 bg-white/[0.06] border border-white/10 text-white rounded-xl font-semibold hover:bg-white/[0.08] transition-all duration-200 no-underline">
+            Cancel
+        </a>
+    </form>
+</div>
+
+</body>
+</html>
