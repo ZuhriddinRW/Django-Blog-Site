@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from django.conf.global_settings import MEDIA_URL
+
 BASE_DIR = Path ( __file__ ).resolve ().parent.parent
 
 SECRET_KEY = 'django-insecure-op_nk#yv@25c+b88pj2czm@gtl^vw@xw%i05*=ssmauv_@wd)v'
@@ -15,7 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts'
+    'accounts',
+    'articles'
 ]
 
 MIDDLEWARE = [
@@ -33,7 +36,7 @@ ROOT_URLCONF = 'blog_project.urls'
 TEMPLATES = [
     {
         'BACKEND' : 'django.template.backends.django.DjangoTemplates',
-        'DIRS' : [ ( BASE_DIR / 'templates' )],
+        'DIRS' : [(BASE_DIR / 'templates')],
         'APP_DIRS' : True,
         'OPTIONS' : {
             'context_processors' : [
@@ -71,13 +74,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
 USE_TZ = True
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = str ( BASE_DIR.joinpath ( 'media' ) )
 
 LOGIN_URL = 'signin'
 LOGIN_REDIRECT_URL = 'home'
