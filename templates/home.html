@@ -3,220 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Blog - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <style>
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: oklch(21% 0.034 264.665);
-            color: white;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'custom-bg': 'oklch(21% 0.034 264.665)',
+                        'custom-purple': 'oklch(58.5% .233 277.117)',
+                        'custom-purple-hover': 'oklch(67.3% .182 276.935)',
+                        'custom-text': 'oklch(70.7% .022 261.325)',
+                    }
+                }
+            }
         }
-
-        /* --- Navbar --- */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 22px;
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            text-decoration: none;
-            color: white;
-            letter-spacing: 0.2px;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .chev {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-right: 2px solid rgba(255, 255, 255, 0.7);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.7);
-            transform: rotate(45deg);
-            margin-top: -2px;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            margin-top: 10px;
-            min-width: 210px;
-            padding: 10px;
-            border-radius: 14px;
-            background: rgba(20, 20, 20, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
-            display: none;
-        }
-
-        .dropdown-menu.show {
-            display: block;
-        }
-
-        .dropdown-item {
-            display: block;
-            padding: 10px 10px;
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.10);
-            margin: 8px 0;
-        }
-
-        /* --- Page layout --- */
-        .page {
-            padding: 26px 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            text-align: center;
-            max-width: 600px;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            color: oklch(70.7% .022 261.325);
-        }
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: oklch(58.5% .233 277.117);
-            color: white;
-            text-decoration: none;
-            border-radius: 0.375rem;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-        .btn:hover {
-            background-color: oklch(67.3% .182 276.935);
-        }
-        .user-info {
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 0.5rem;
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <nav class="navbar">
-        <a class="brand" href="{% url 'home' %}">Blog</a>
+<body class="font-sans bg-[oklch(21%_0.034_264.665)] text-white min-h-screen">
 
-        <div class="nav-right">
-            {% if user.is_authenticated %}
-                <div class="dropdown" id="profileDropdown">
-                    <div class="dropdown-toggle" id="dropdownToggle" aria-haspopup="true" aria-expanded="false">
-                        {{ user.username }} <span class="chev"></span>
-                    </div>
-                    <div class="dropdown-menu" id="dropdownMenu" role="menu">
-                        <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
-                        <div class="divider"></div>
-                        <a class="dropdown-item" href="{% url 'signout' %}">Logout</a>
-                    </div>
-                </div>
-            {% else %}
-                <a href="{% url 'signin' %}" class="btn">Sign In</a>
-            {% endif %}
+<nav class="sticky top-0 z-10 flex items-center justify-between px-6 py-3.5 bg-black/25 backdrop-blur-[10px] border-b border-white/[0.08]">
+    <a href="{% url 'home' %}"
+       class="flex items-center gap-2.5 font-bold text-xl tracking-[0.2px] text-white no-underline">
+        ✍️ Blog
+    </a>
+
+    <div class="flex items-center gap-3">
+        {% if user.is_authenticated %}
+        <a href="{% url 'article_new' %}"
+           class="inline-block px-4 py-2.5 bg-[oklch(58.5%_.233_277.117)] text-white no-underline rounded-xl font-semibold transition-all duration-200 hover:bg-[oklch(67.3%_.182_276.935)] hover:-translate-y-px">
+            + New Article
+        </a>
+        <div class="relative group">
+            <button class="inline-flex items-center gap-2 px-3 py-2.5 rounded-xl text-white no-underline font-semibold bg-white/[0.06] border border-white/10 cursor-pointer select-none">
+                {{ user.username }}
+                <span class="inline-block w-2.5 h-2.5 border-r-2 border-b-2 border-white/70 rotate-45 -mt-0.5"></span>
+            </button>
+            <div class="absolute right-0 mt-2.5 min-w-[210px] p-2.5 rounded-[14px] bg-[rgba(20,20,20,0.9)] border border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.4)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                <a href="{% url 'password_change' %}"
+                   class="block px-2.5 py-2.5 rounded-[10px] text-white no-underline font-semibold hover:bg-white/[0.08]">
+                    Change password
+                </a>
+                <div class="h-px bg-white/10 my-2"></div>
+                <a href="{% url 'signout' %}"
+                   class="block px-2.5 py-2.5 rounded-[10px] text-white no-underline font-semibold hover:bg-white/[0.08]">
+                    Logout
+                </a>
+            </div>
         </div>
-    </nav>
+        {% else %}
+        <a href="{% url 'signin' %}"
+           class="inline-block px-4 py-2.5 bg-[oklch(58.5%_.233_277.117)] text-white no-underline rounded-xl font-semibold transition-all duration-200 hover:bg-[oklch(67.3%_.182_276.935)] hover:-translate-y-px">
+            Sign In
+        </a>
+        {% endif %}
+    </div>
+</nav>
 
-    <div class="page">
-        <div class="container">
-        <h1>Welcome to Your Dashboard! 🎉</h1>
-
-        <div class="user-info">
-            <p>Hello, <strong>{{ user.username }}</strong>!</p>
-            <p>Email: {{ user.email|default:"Not provided" }}</p>
-        </div>
-
-        <p>You have successfully logged in.</p>
-
-            <a href="{% url 'signout' %}" class="btn">Sign Out</a>
-        </div>
+<div class="py-10 px-5 max-w-[1200px] mx-auto">
+    <div class="text-center mb-16">
+        <h1 class="text-5xl mb-4 bg-gradient-to-br from-[oklch(85%_.15_277)] to-[oklch(75%_.20_290)] bg-clip-text text-transparent">
+            Welcome to Our Blog
+        </h1>
+        <p class="text-xl text-[oklch(70.7%_.022_261.325)] max-w-[600px] mx-auto mb-8">
+            Discover amazing stories, insights, and ideas from our community of writers
+        </p>
     </div>
 
-    <script>
-        (function () {
-            const toggle = document.getElementById('dropdownToggle');
-            const menu = document.getElementById('dropdownMenu');
-            if (!toggle || !menu) return;
+    <div class="flex justify-between items-center mb-8">
+        <h2 class="text-[1.75rem] m-0">Latest Articles</h2>
+    </div>
 
-            function closeMenu() {
-                menu.classList.remove('show');
-                toggle.setAttribute('aria-expanded', 'false');
-            }
+    {% if articles %}
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6 mb-10">
+        {% for article in articles %}
+        <a href="{% url 'article_detail' article.pk %}"
+           class="bg-white/[0.04] border border-white/[0.08] rounded-2xl overflow-hidden transition-all duration-300 no-underline text-white flex flex-col hover:-translate-y-1 hover:bg-white/[0.06] hover:border-white/[0.15] hover:shadow-[0_12px_40px_rgba(0,0,0,0.3)]">
+            {% if article.photo %}
+            <img src="{{ article.photo.url }}" alt="{{ article.title }}" class="w-full h-[200px] object-cover">
+            {% else %}
+            <div class="w-full h-[200px] bg-gradient-to-br from-[oklch(30%_.05_270)] to-[oklch(25%_.08_260)]"></div>
+            {% endif %}
 
-            toggle.addEventListener('click', function (e) {
-                e.stopPropagation();
-                const isOpen = menu.classList.contains('show');
-                if (isOpen) {
-                    closeMenu();
-                } else {
-                    menu.classList.add('show');
-                    toggle.setAttribute('aria-expanded', 'true');
-                }
-            });
+            <div class="p-5 flex-1 flex flex-col">
+                <h3 class="text-[1.35rem] font-bold m-0 mb-2.5 leading-tight">
+                    {{ article.title }}
+                </h3>
 
-            document.addEventListener('click', function () {
+                {% if article.summary %}
+                <p class="text-[oklch(70%_.022_261.325)] m-0 mb-4 leading-relaxed flex-1">
+                    {{ article.summary }}
+                </p>
+                {% else %}
+                <p class="text-[oklch(70%_.022_261.325)] m-0 mb-4 leading-relaxed flex-1">
+                    {{ article.body|truncatewords:20 }}
+                </p>
+                {% endif %}
+
+                <div class="flex justify-between items-center pt-4 border-t border-white/[0.08] text-sm">
+                            <span class="text-[oklch(75%_.10_277)] font-semibold">
+                                by {{ article.author.username }}
+                            </span>
+                    <span class="text-[oklch(60%_.022_261.325)]">
+                                {{ article.created_at|date:"M d, Y" }}
+                            </span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-16 px-5">
+        <h3 class="text-2xl mb-4 text-[oklch(60%_.022_261.325)]">
+            No articles yet
+        </h3>
+        <p>Be the first to write something!</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'article_new' %}"
+           class="inline-block px-4 py-2.5 bg-[oklch(58.5%_.233_277.117)] text-white no-underline rounded-xl font-semibold transition-all duration-200 hover:bg-[oklch(67.3%_.182_276.935)] hover:-translate-y-px">
+            Write First Article
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    (function () {
+        const toggle = document.getElementById('dropdownToggle');
+        const menu = document.getElementById('dropdownMenu');
+        if (!toggle || !menu) return;
+
+        function closeMenu() {
+            menu.classList.remove('show');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        toggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const isOpen = menu.classList.contains('show');
+            if (isOpen) {
                 closeMenu();
-            });
+            } else {
+                menu.classList.add('show');
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+        });
 
-            menu.addEventListener('click', function (e) {
-                e.stopPropagation();
-            });
-        })();
-    </script>
+        document.addEventListener('click', closeMenu);
+        menu.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+    })();
+</script>
+
 </body>
 </html>

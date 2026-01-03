@@ -23,5 +23,4 @@ urlpatterns = [
         ),
         name='password_change_done',
     ),
-    path ( '', home, name='home' )
 ]
