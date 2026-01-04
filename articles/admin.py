@@ -2,11 +2,9 @@ from django.contrib import admin
 from .models import Article, Comment
 
 
-class CommentInline(admin.TabularInline):
+class CommentInline ( admin.TabularInline ) :
     model = Comment
     extra = 0
-
-
 
 
 class ArticleAdmin ( admin.ModelAdmin ) :
@@ -19,5 +17,5 @@ class ArticleAdmin ( admin.ModelAdmin ) :
         super ().save_model ( request, obj, form, change )
 
 
-admin.site.register ( Article, ArticleAdmin)
-admin.site.register(Comment)
+admin.site.register ( Article, ArticleAdmin )
+admin.site.register ( Comment )
