@@ -18,32 +18,30 @@ class ArticleDetailView ( DetailView ) :
     template_name = 'Article/article_detail.html'
     context_object_name = 'article'
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["comment_form"] = CommentForm()
-        # Use the model Meta ordering (newest first)
-        ctx["comments"] = self.object.comments.select_related("author").all()
+    def get_context_data(self, **kwargs) :
+        ctx = super ().get_context_data ( **kwargs )
+        ctx["comment_form"] = CommentForm ()
+        ctx["comments"] = self.object.comments.select_related ( "author" ).all ()
         return ctx
 
 
-def add_comment(request, pk):
-    """Create a comment from the article page (not only admin)."""
-    article = get_object_or_404(Article, pk=pk)
+def add_comment(request, pk) :
+    article = get_object_or_404 ( Article, pk=pk )
 
-    if not request.user.is_authenticated:
-        return redirect("signin")
+    if not request.user.is_authenticated :
+        return redirect ( "signin" )
 
-    if request.method != "POST":
-        return redirect("article_detail", pk=article.pk)
+    if request.method != "POST" :
+        return redirect ( "article_detail", pk=article.pk )
 
-    form = CommentForm(request.POST)
-    if form.is_valid():
-        Comment.objects.create(
+    form = CommentForm ( request.POST )
+    if form.is_valid () :
+        Comment.objects.create (
             article=article,
             author=request.user,
             comment=form.cleaned_data["comment"],
         )
-    return redirect("article_detail", pk=article.pk)
+    return redirect ( "article_detail", pk=article.pk )
 
 
 class ArticleCreateView ( LoginRequiredMixin, CreateView ) :

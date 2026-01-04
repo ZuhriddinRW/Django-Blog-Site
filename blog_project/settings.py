@@ -17,12 +17,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'accounts',
     'articles',
 
     'ckeditor',
-    'ckeditor_uploader',
-
+    'ckeditor_uploader'
 ]
 
 MIDDLEWARE = [
@@ -97,9 +97,9 @@ AUTH_USER_MODEL = 'accounts.User'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': '100%',
+    'default' : {
+        'toolbar' : 'full',
+        'height' : 300,
+        'width' : '100%',
     },
 }

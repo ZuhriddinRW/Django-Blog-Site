@@ -41,7 +41,7 @@ def sign_in(request) :
                 login ( request, user )
                 remember_me = request.POST.get ( 'remember-me' )
                 if not remember_me :
-                    request.session.set_expiry ( 0 )  # Session expires on browser close
+                    request.session.set_expiry ( 0 )
                 messages.success ( request, f'Welcome back, {username}!' )
                 return redirect ( 'home' )
         else :
