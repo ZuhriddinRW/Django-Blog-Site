@@ -19,3 +19,26 @@ class Article ( models.Model ) :
 
     def get_absolute_url(self) :
         return reverse ( 'article_detail', args=[str ( self.id )] )
+
+class Comment(models.Model):
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    # TextField allows users to write normal-length comments from the article page.
+    # The max_length is enforced at the form/validation layer.
+    comment = models.TextField(max_length=800)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.comment
+
+    class Meta:
+        ordering = ["-id"]
+
+    def get_absolute_url(self):
+        return reverse('article_detail', args=[str(self.article_id)])

@@ -54,7 +54,7 @@
 
     <div class="mb-16">
         <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-10 text-lg leading-relaxed text-[oklch(70%_.022_261.325)] whitespace-pre-wrap">
-            {{ article.body|truncatewords_html:20|safe }}
+            {{ article.body|safe }}
         </div>
     </div>
 
@@ -74,6 +74,70 @@
             ← Back to Home
         </a>
     </div>
+    <!-- Comments / Izohlar -->
+    <section class="mt-16 pt-12 border-t border-white/10">
+        <div class="flex items-end justify-between gap-6 mb-8">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight">Comments</h2>
+                <p class="text-sm text-[oklch(70%_.022_261.325)]">Izohlar</p>
+            </div>
+            <span class="text-sm text-[oklch(70%_.022_261.325)]">
+                {{ comments|length }}
+            </span>
+        </div>
+
+        {% if user.is_authenticated %}
+            <form action="{% url 'add_comment' article.pk %}" method="post"
+                  class="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 mb-10">
+                {% csrf_token %}
+                <label class="block text-sm font-semibold mb-2">Add a comment <span class="font-normal text-[oklch(70%_.022_261.325)]">/ Izoh qoldiring</span></label>
+                <textarea name="comment" rows="4"
+                          class="w-full rounded-xl bg-black/20 border border-white/10 px-4 py-3 text-[oklch(92%_.01_260)] placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[oklch(58.5%_.233_277.117)]"
+                          placeholder="Write your comment... / Izohingizni yozing..." required>{{ comment_form.comment.value|default_if_none:"" }}</textarea>
+                {% if comment_form.comment.errors %}
+                    <p class="mt-2 text-sm text-red-300">{{ comment_form.comment.errors|striptags }}</p>
+                {% endif %}
+                <div class="mt-4 flex items-center justify-between gap-4">
+                    <p class="text-xs text-[oklch(70%_.022_261.325)]">Be respectful. / Hurmat bilan yozing.</p>
+                    <button type="submit"
+                            class="px-6 py-3 bg-[oklch(58.5%_.233_277.117)] text-white rounded-xl font-semibold hover:bg-[oklch(67.3%_.182_276.935)] hover:-translate-y-px transition-all duration-200">
+                        Post <span class="font-normal">/ Yuborish</span>
+                    </button>
+                </div>
+            </form>
+        {% else %}
+            <div class="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 mb-10">
+                <p class="text-[oklch(70%_.022_261.325)]">
+                    Please <a class="underline font-semibold" href="{% url 'signin' %}">sign in</a> to leave a comment.
+                    <span class="block mt-1">Izoh qoldirish uchun <a class="underline font-semibold" href="{% url 'signin' %}">kirish</a> qiling.</span>
+                </p>
+            </div>
+        {% endif %}
+
+        <div class="space-y-4">
+            {% for comment in comments %}
+                <div class="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
+                    <div class="flex items-center justify-between gap-4 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white/10 grid place-items-center font-bold">
+                                {{ comment.author.username|default:comment.author|slice:":1"|upper }}
+                            </div>
+                            <div>
+                                <p class="font-semibold">{{ comment.author.username|default:comment.author }}</p>
+                                <p class="text-xs text-[oklch(70%_.022_261.325)]">User / Foydalanuvchi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-[oklch(92%_.01_260)] whitespace-pre-wrap">{{ comment.comment }}</p>
+                </div>
+            {% empty %}
+                <div class="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
+                    <p class="text-[oklch(70%_.022_261.325)]">No comments yet. / Hozircha izohlar yo‘q.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
 </article>
 
 </body>
