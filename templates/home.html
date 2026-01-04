@@ -100,7 +100,7 @@
                 </p>
                 {% else %}
                 <p class="text-[oklch(70%_.022_261.325)] m-0 mb-4 leading-relaxed flex-1">
-                    {{ article.body|truncatewords:20 }}
+                    {{ article.body|striptags|cut:"&nbsp;"|cut:"\u00a0"|truncatewords:20 }}
                 </p>
                 {% endif %}
 
