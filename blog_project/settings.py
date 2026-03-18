@@ -1,105 +1,105 @@
+import os
 from pathlib import Path
 
 from django.conf.global_settings import MEDIA_URL
 
-BASE_DIR = Path ( __file__ ).resolve ().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-op_nk#yv@25c+b88pj2czm@gtl^vw@xw%i05*=ssmauv_@wd)v'
+SECRET_KEY = "django-insecure-op_nk#yv@25c+b88pj2czm@gtl^vw@xw%i05*=ssmauv_@wd)v"
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'accounts',
-    'articles',
-
-    'ckeditor',
-    'ckeditor_uploader'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "accounts",
+    "articles",
+    "ckeditor",
+    "ckeditor_uploader",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'blog_project.urls'
+ROOT_URLCONF = "blog_project.urls"
 
 TEMPLATES = [
     {
-        'BACKEND' : 'django.template.backends.django.DjangoTemplates',
-        'DIRS' : [(BASE_DIR / 'templates')],
-        'APP_DIRS' : True,
-        'OPTIONS' : {
-            'context_processors' : [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'blog_project.wsgi.application'
+WSGI_APPLICATION = "blog_project.wsgi.application"
 
 DATABASES = {
-    'default' : {
-        'ENGINE' : 'django.db.backends.sqlite3',
-        'NAME' : BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME' : 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME' : 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME' : 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME' : 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Asia/Tashkent'
+TIME_ZONE = "Asia/Tashkent"
 
 USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = str ( BASE_DIR.joinpath ( 'media' ) )
+MEDIA_URL = "/media/"
+MEDIA_ROOT = str(BASE_DIR.joinpath("media"))
 
-LOGIN_URL = 'signin'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'signin'
+LOGIN_URL = "signin"
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "signin"
 
-AUTH_USER_MODEL = 'accounts.User'
-CKEDITOR_UPLOAD_PATH = 'uploads/'
+AUTH_USER_MODEL = "accounts.User"
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_CONFIGS = {
-    'default' : {
-        'toolbar' : 'full',
-        'height' : 300,
-        'width' : '100%',
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": "100%",
     },
 }
