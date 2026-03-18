@@ -1,74 +1,80 @@
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .models import Article, Comment
 from .forms import CommentForm
 
 
-class ArticleListView ( ListView ) :
+class ArticleListView(ListView):
     model = Article
-    template_name = 'home.html'
-    context_object_name = 'articles'
-    ordering = ['-id']
+    template_name = "home.html"
+    context_object_name = "articles"
+    ordering = ["-id"]
 
 
-class ArticleDetailView ( DetailView ) :
+class ArticleDetailView(DetailView):
     model = Article
-    template_name = 'Article/article_detail.html'
-    context_object_name = 'article'
+    template_name = "Article/article_detail.html"
+    context_object_name = "article"
 
-    def get_context_data(self, **kwargs) :
-        ctx = super ().get_context_data ( **kwargs )
-        ctx["comment_form"] = CommentForm ()
-        ctx["comments"] = self.object.comments.select_related ( "author" ).all ()
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["comment_form"] = CommentForm()
+        ctx["comments"] = self.object.comments.select_related("author").all()
         return ctx
 
 
-def add_comment(request, pk) :
-    article = get_object_or_404 ( Article, pk=pk )
+def add_comment(request, pk):
+    article = get_object_or_404(Article, pk=pk)
 
-    if not request.user.is_authenticated :
-        return redirect ( "signin" )
+    if not request.user.is_authenticated:
+        return redirect("signin")
 
-    if request.method != "POST" :
-        return redirect ( "article_detail", pk=article.pk )
+    if request.method != "POST":
+        return redirect("article_detail", pk=article.pk)
 
-    form = CommentForm ( request.POST )
-    if form.is_valid () :
-        Comment.objects.create (
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        Comment.objects.create(
             article=article,
             author=request.user,
             comment=form.cleaned_data["comment"],
         )
-    return redirect ( "article_detail", pk=article.pk )
+    return redirect("article_detail", pk=article.pk)
 
 
-class ArticleCreateView ( LoginRequiredMixin, CreateView ) :
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
-    template_name = 'Article/article_new.html'
-    fields = ['title', 'summary', 'body', 'photo']
+    template_name = "Article/article_new.html"
+    fields = ["title", "summary", "body", "photo"]
 
-    def form_valid(self, form) :
+    def form_valid(self, form):
         form.instance.author = self.request.user
-        return super ().form_valid ( form )
+        return super().form_valid(form)
 
 
-class ArticleUpdateView ( LoginRequiredMixin, UserPassesTestMixin, UpdateView ) :
+class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Article
-    template_name = 'Article/article_edit.html'
-    fields = ['title', 'summary', 'body', 'photo']
+    template_name = "Article/article_edit.html"
+    fields = ["title", "summary", "body", "photo"]
 
-    def test_func(self) :
-        article = self.get_object ()
+    def test_func(self):
+        article = self.get_object()
         return self.request.user == article.author
 
 
-class ArticleDeleteView ( LoginRequiredMixin, UserPassesTestMixin, DeleteView ) :
+class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Article
-    template_name = 'Article/article_delete.html'
-    success_url = reverse_lazy ( 'home' )
+    template_name = "Article/article_delete.html"
+    success_url = reverse_lazy("home")
 
-    def test_func(self) :
-        article = self.get_object ()
+    def test_func(self):
+        article = self.get_object()
         return self.request.user == article.author
